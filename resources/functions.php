@@ -61,7 +61,7 @@ function get_products() {
                 <h4><a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
                 </h4>
                 <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
-                <a class="btn btn-primary" target="_blank" href="item.php?id={$row['product_id']}">Add to Cart</a>
+                <a class="btn btn-primary" target="_blank" href="cart.php?add={$row['product_id']}">Add to Cart</a>
             </div>
         </div>
     </div>
@@ -155,6 +155,28 @@ function login_user() {
       set_message("Welcome {$username}!");
       redirect("admin");
     }
+  }
+}
+
+function send_message() {
+  if (isset($_POST['submit'])){
+    $to        =  "someEmailaddress@gmail.com";
+    $from_name =  $_POST['name'];
+    $subject   =  $_POST['subject'];
+    $email     =  $_POST['email'];
+    $message   =  $_POST['message'];
+
+    $headers = "From: {$from_name} {$email}";
+    $result = mail($to, $subject, $message, $headers);
+
+    if(!$result) {
+      set_message("We were unable to send your message");
+      redirect("contact.php");
+    } else {
+      set_message("Your message has been sent");
+      redirect("contact.php");
+    }
+
   }
 }
 
