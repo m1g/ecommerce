@@ -22,6 +22,21 @@
                 </div>
                 <!-- /.row -->
 
+                <?php
+
+                if($_SERVER['REQUEST_URI'] == "/ecom/public/admin/" || $_SERVER['REQUEST_URI'] == "/ecom/public/admin/index.php") {
+
+                  include(TEMPLATE_BACK . "/admin_content.php");
+                }
+
+                if(isset($_GET['orders'])) {
+                  include(TEMPLATE_BACK . "/orders.php");
+                }
+
+                echo $_SERVER['REQUEST_URI'];
+
+                 ?>
+
             </div>
             <!-- /.container-fluid -->
 
