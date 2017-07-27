@@ -6,13 +6,24 @@
         <span class="icon-bar"></span>
     </button>
     <a class="navbar-brand" href="index.php">SB Admin</a>
+    <a class="navbar-brand" href="../index.php">Home</a>
 </div>
 
 <!-- Top Menu Items -->
 
 <ul class="nav navbar-right top-nav">
   <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><?php $username ?><b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
+          <?php // BACKEND USERNAME //
+
+          if(isset($_SESSION['username'])) {
+            echo $_SESSION['username'];
+          } else {
+            echo "unregistered user";
+          }
+
+          ?>
+          <b class="caret"></b></a>
         <ul class="dropdown-menu">
 
             <li class="divider"></li>
