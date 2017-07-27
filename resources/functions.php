@@ -2,6 +2,11 @@
 
 // helper functions
 
+function last_id() {
+  global $connection;
+  return mysqli_insert_id($connection);
+}
+
 function set_message($msg) {
   if(!empty($msg)) {
     $_SESSION['message'] = $msg;
@@ -61,7 +66,7 @@ function get_products() {
                 <h4><a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
                 </h4>
                 <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
-                <a class="btn btn-primary" target="_blank" href="cart.php?add={$row['product_id']}">Add to Cart</a>
+                <a class="btn btn-primary" target="_blank" href="../resources/cart.php?add={$row['product_id']}">Add to Cart</a>
             </div>
         </div>
     </div>
@@ -152,7 +157,8 @@ function login_user() {
       set_message("Incorrect password or username");
       redirect("login.php");
     } else {
-      set_message("Welcome {$username}!");
+
+      $_SESSION['username'] = $username;
       redirect("admin");
     }
   }
