@@ -128,7 +128,7 @@ DELIMETER;
   }
 
 
-  function report() { // Displays items in cart
+  function process_transaction() { // Displays items in cart
 
     if(isset($_GET['tx'])) {
 
@@ -150,7 +150,7 @@ DELIMETER;
           $length = strlen($name - 8);
           $id = substr($name, 8, $length);
 
-          $send_order = query("INSERT INTO orders (order_amount, order_transaction, order_status, order_currency) VALUES('{$amount}', '{$currency}', '{$transaction}', '{$status}')");
+          $send_order = query("INSERT INTO orders (order_amount, order_transaction, order_currency, order_status) VALUES('{$amount}', '{$transaction}', '{$currency}', '{$status}')");
           $last_id = last_id();
           confirm($send_order);
 
