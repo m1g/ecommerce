@@ -88,7 +88,7 @@
     <div class="form-group">
          <label for="product-title">Product Category</label>
         <select name="product_category_id" id="" class="form-control">
-            <option value="">Select Category</option>
+            <option value="<?php echo $product_category_id; ?>"><?php echo show_product_category($product_category_id); ?></option>
 
             <?php show_cat_add_product(); ?>
 

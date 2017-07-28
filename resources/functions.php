@@ -341,7 +341,7 @@ function update_product() {
     if(empty($product_image)) {
       $get_pic = query("SELECT product_image FROM products WHERE product_id =" .escape_string($_GET['id']). " ");
       confirm($get_pic);
-  
+
       while($pic = fetch_array($get_pic)) {
         $product_image = $pic['product_image'];
       }
@@ -369,6 +369,130 @@ function update_product() {
   }
 
 }
+
+/**************************** CATEGORIES IN ADMIN **************************************/
+
+
+function show_categories_in_admin() {
+
+  $category_query = query("SELECT * FROM categories");
+  confirm($category_query);
+
+  while($row = fetch_array($category_query)) {
+    $cat_id = $row['cat_id'];
+    $cat_title = $row['cat_title'];
+
+    $category = <<<DELIMETER
+
+      <tr>
+          <td>{$cat_id}</td>
+          <td>{$cat_title}</td>
+          <td><a class="btn btn-danger" href="../../resources/templates/back/delete_category.php?id={$row['cat_id']}"><span class="glyphicon glyphicon-remove"></span></a></td>
+      </tr>
+
+DELIMETER;
+
+    echo $category;
+
+  }
+}
+
+
+function add_category() {
+
+  if (isset($_POST['add_category'])) {
+    $cat_title = escape_string($_POST['cat_title']);
+
+    if(empty($cat_title) || $cat_title == " ") {
+      echo "<p class='bg-danger'>This cannot be empty</p>";
+    } else {
+      $insert_cat = query("INSERT INTO categories(cat_title) VALUES('{$cat_title}') ");
+      confirm($insert_cat);
+      set_message("Category Created");
+
+    }
+  }
+
+}
+
+/**************************** ADMIN USERS **************************************/
+
+function display_users() {
+
+  $user_query = query("SELECT * FROM users");
+  confirm($user_query);
+
+  while($row = fetch_array($user_query)) {
+    $user_id = $row['user_id'];
+    $username = $row['username'];
+    $email = $row['email'];
+    $password = $row['password'];
+
+    $user = <<<DELIMETER
+
+      <tr>
+          <td>{$user_id}</td>
+          <td>{$username}</td>
+          <td>{$email}</td>
+          <td>{$password}</td>
+          <td><a class="btn btn-danger" href="../../resources/templates/back/delete_user.php?id={$row['user_id']}"><span class="glyphicon glyphicon-remove"></span></a></td>
+      </tr>
+
+DELIMETER;
+
+    echo $user;
+
+  }
+}
+
+function add_user() {
+
+  if(isset($_POST['add_user'])) {
+
+    $username   = escape_string($_POST['username']);
+    $email      = escape_string($_POST['email']);
+    $password   = escape_string($_POST['password']);
+    // $user_photo = escape_string($_FILES['file']['name']); // SAME AS VIEW PRODUCT IF NEEDED TO ADD
+    // $photo_temp = escape_string($_FILES['file']['tmp_name']);
+    //
+    // move_uploaded_file($photo_temp, UPLOAD_DIRECTORY . DS . $user_photo);
+
+    $query = query("INSERT INTO users(username, email, password) VALUES('{$username}', '{$email}', '{$password}')");
+    confirm($query);
+
+    set_message("User Created");
+    redirect("index.php?users");
+
+  }
+
+}
+
+
+function get_reports() {
+
+  $query = query('SELECT * FROM reports');
+  confirm($query);
+
+  while($row = fetch_array($query)) { // uses heredoc
+
+    $report = <<<DELIMETER
+
+    <tr>
+      <td>{$row['report_id']}</td>
+      <td>{$row['product_id']}</td>
+      <td>{$row['order_id']}</td>
+      <td>{$row['product_price']}</td>
+      <td>{$row['product_title']}</td>
+      <td>{$row['product_quantity']}</td>
+      <td><a class="btn btn-danger" href="../../resources/templates/back/delete_report.php?id={$row['report_id']}"><span class="glyphicon glyphicon-remove"></span></a></td>
+    </tr>
+
+DELIMETER;
+
+    echo $report;
+  }
+}
+
 
 
  ?>
